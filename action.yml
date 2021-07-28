@@ -1,0 +1,21 @@
+name: 'Review Queue'
+description: 'Ready for review? Add it to the queue.'
+inputs:
+  project-owner:
+    description: 'The login of the organization that owns the project'
+    required: true
+    default: 'github'
+  project-number:
+    description: 'The number of the Review Queue Project'
+    required: true
+  flagged-in-users:
+    description: 'A comma-separated list of users flagged into this action'
+    default: ''
+    required: false
+  debug:
+    description: 'Log debugging info in the action output'
+    default: false
+    required: false
+runs:
+  using: 'node12'
+  main: 'index.js'
