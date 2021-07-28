@@ -1,6 +1,6 @@
 {
   "name": "review-queue",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Add reviewable PRs to the Review Queue",
   "main": "index.js",
   "scripts": {
