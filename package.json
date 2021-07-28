@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "preversion": "npm test",
-    "version": "npx @vercel/ncc build index.js --license licenses.txt && git add -A dist",
+    "version": "npx --yes @vercel/ncc build index.js --license licenses.txt && git add -A dist",
     "postversion": "git push && git push --tags"
   },
   "author": "max.beizer@gmail.com",
