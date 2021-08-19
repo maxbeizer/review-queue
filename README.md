@@ -1,5 +1,7 @@
 # Review Queue
 
+**Note** This Action requires that you have access the [new projects beta](https://github.blog/2021-06-23-introducing-new-github-issues/). It is not compatible with the classic Projects product.
+
 Do you ever wish you had just one place to look for Pull Requests that need review? This action adds reviewable Pull Requests to a specified Project board and removes non-reviewable Pull Requests. So when you are ready, you just have one Project board full of Pull Requests that need review.
 
 What constitutes a reviewable Pull Request? A Pull Request that is neither closed nor merged nor in a draft state. This action runs on various Pull Request and Pull Request Review events to determine if the related Pull Request should be added or removed from the designated Project.
@@ -31,6 +33,9 @@ with:
   project-number: 12345
   flagged-in-users: "maxbeizer,stephenotalora,mattcosta7"
   debug: false
+env:
+  PAT_TOKEN: ${{ secrets.PAT_TOKEN }} # The token must have repo and admin:org scopes
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 ## Developing
