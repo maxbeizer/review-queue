@@ -46,3 +46,7 @@ env:
 ## Releases
 
 Releases will follow [semver](https://semver.org/). Once a release candidate is finalized, `npm version patch` etc will run the tests, build the dist, commit the bump, and push the code and tags.
+
+## License
+
+MIT
