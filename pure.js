@@ -46,7 +46,7 @@ const shouldQueueFunc = ({ action, pull_request, review }) => {
   if (
     action === "closed" ||
     action === "converted_to_draft" ||
-    (action === "opened" && pull_request.draft) ||
+    pull_request.draft ||
     reviewState === "approved"
   ) {
     return false;

@@ -104,8 +104,12 @@ describe("shouldQueueFunc", () => {
     expect(result).toBe(false);
   });
 
-  it('when action is "opened" it returns true', () => {
-    const result = shouldQueueFunc({ action: "opened", pull_request, review });
-    expect(result).toBe(true);
+  it("when PR is draft it returns false", () => {
+    const result = shouldQueueFunc({
+      action: "someotheraction",
+      pull_request: { ...pull_request, draft: true },
+      review,
+    });
+    expect(result).toBe(false);
   });
 });
