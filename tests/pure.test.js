@@ -1,4 +1,7 @@
-const { areActorAndAuthorFlaggedInFunc, shouldQueueFunc } = require("../pure");
+const {
+  areActorAndAuthorFlaggedInFunc,
+  shouldQueueFunc,
+} = require("../src/pure");
 
 const noop = () => {};
 const log = noop;

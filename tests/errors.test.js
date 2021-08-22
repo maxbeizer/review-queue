@@ -1,7 +1,7 @@
 const {
   isAlreadyAddedError,
   ALREADY_ADDED_ERROR_MESSAGE,
-} = require("../errors");
+} = require("../src/errors");
 
 describe("isAlreadyAddedError", () => {
   it("when no errors key passed in, returns false", () => {

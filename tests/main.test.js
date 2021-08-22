@@ -1,5 +1,5 @@
-const { ALREADY_ADDED_ERROR_MESSAGE } = require("../errors");
-const { main } = require("../main");
+const { ALREADY_ADDED_ERROR_MESSAGE } = require("../src/errors");
+const { main } = require("../src/main");
 
 const noop = () => {};
 let savedLog = [];
