@@ -1,90 +1,95 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 493:
+/***/ 582:
 /***/ ((module, exports) => {
 
-const ALREADY_ADDED_ERROR_MESSAGE = 'The item already exists in the project.'
+const ALREADY_ADDED_ERROR_MESSAGE = "The item already exists in the project.";
 
-const isAlreadyAddedError = error => {
-  return error.errors && error.errors[0] && error.errors[0].message === ALREADY_ADDED_ERROR_MESSAGE
-}
+const isAlreadyAddedError = (error) => {
+  return (
+    error.errors &&
+    error.errors[0] &&
+    error.errors[0].message === ALREADY_ADDED_ERROR_MESSAGE
+  );
+};
 
 module.exports = exports = {
   isAlreadyAddedError,
-  ALREADY_ADDED_ERROR_MESSAGE
-}
+  ALREADY_ADDED_ERROR_MESSAGE,
+};
 
 
 /***/ }),
 
-/***/ 315:
+/***/ 11:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
-const core = __nccwpck_require__(614)
+const core = __nccwpck_require__(558);
 
-exports.log = (...args) => core.getInput('debug', {required: false}) && console.log(...args)
+exports.log = (...args) =>
+  core.getInput("debug", { required: false }) && console.log(...args);
 
 
 /***/ }),
 
-/***/ 527:
+/***/ 333:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
-const {isAlreadyAddedError} = __nccwpck_require__(493)
+const { isAlreadyAddedError } = __nccwpck_require__(582);
 
-exports.main = async inputFunc => {
-  const {state, reader, writer} = await inputFunc()
-  const {log, debug, info, setFailed, setOutput, errorMessages} = writer
-  log(`state/reader`, {state, reader})
+exports.main = async (inputFunc) => {
+  const { state, reader, writer } = await inputFunc();
+  const { log, debug, info, setFailed, setOutput, errorMessages } = writer;
+  log(`state/reader`, { state, reader });
 
   try {
     if (!reader.areActorAndAuthorFlaggedIn) {
-      info('User has not been flagged in to the Review Queue')
-      setOutput('success', true)
-      state['actorNotFlaggedIn'] = true
-      return
+      info("User has not been flagged in to the Review Queue");
+      setOutput("success", true);
+      state["actorNotFlaggedIn"] = true;
+      return;
     }
 
-    const {response, message} = await reader.func(state, reader, writer)
+    const { response, message } = await reader.func(state, reader, writer);
 
-    log(`response`, response)
-    log(`message`, message)
-    info(message)
-    setOutput('success', true)
-    setOutput('messages', message)
+    log(`response`, response);
+    log(`message`, message);
+    info(message);
+    setOutput("success", true);
+    setOutput("messages", message);
   } catch (error) {
-    log('error', error)
+    log("error", error);
 
     // Item already exists on project so return success
     if (isAlreadyAddedError(error)) {
-      debug('The item already exists in the Review Queue.')
-      setOutput('success', true)
-      setOutput('messages', 'The item already exists in the Reivew Queue')
-      state['alreadyExists'] = true
-      return
+      debug("The item already exists in the Review Queue.");
+      setOutput("success", true);
+      setOutput("messages", "The item already exists in the Reivew Queue");
+      state["alreadyExists"] = true;
+      return;
     }
 
-    setFailed(error.message)
-    setOutput('success', false)
-    if (errorMessages) setOutput('messages', errorMessages.join('. '))
+    setFailed(error.message);
+    setOutput("success", false);
+    if (errorMessages) setOutput("messages", errorMessages.join(". "));
 
-    return {state, reader, writer}
+    return { state, reader, writer };
   } finally {
     if (errorMessages && errorMessages.length > 0) {
-      info('Error messages:')
+      info("Error messages:");
       for (const message of errorMessages) {
-        info(message)
+        info(message);
       }
     }
-    return {state, reader, writer}
+    return { state, reader, writer };
   }
-}
+};
 
 
 /***/ }),
 
-/***/ 899:
+/***/ 324:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 "use strict";
@@ -111,7 +116,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.issue = exports.issueCommand = void 0;
 const os = __importStar(__nccwpck_require__(87));
-const utils_1 = __nccwpck_require__(655);
+const utils_1 = __nccwpck_require__(619);
 /**
  * Commands
  *
@@ -183,7 +188,7 @@ function escapeProperty(s) {
 
 /***/ }),
 
-/***/ 614:
+/***/ 558:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 "use strict";
@@ -218,9 +223,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getState = exports.saveState = exports.group = exports.endGroup = exports.startGroup = exports.info = exports.warning = exports.error = exports.debug = exports.isDebug = exports.setFailed = exports.setCommandEcho = exports.setOutput = exports.getBooleanInput = exports.getInput = exports.addPath = exports.setSecret = exports.exportVariable = exports.ExitCode = void 0;
-const command_1 = __nccwpck_require__(899);
-const file_command_1 = __nccwpck_require__(282);
-const utils_1 = __nccwpck_require__(655);
+const command_1 = __nccwpck_require__(324);
+const file_command_1 = __nccwpck_require__(961);
+const utils_1 = __nccwpck_require__(619);
 const os = __importStar(__nccwpck_require__(87));
 const path = __importStar(__nccwpck_require__(622));
 /**
@@ -469,7 +474,7 @@ exports.getState = getState;
 
 /***/ }),
 
-/***/ 282:
+/***/ 961:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 "use strict";
@@ -500,7 +505,7 @@ exports.issueCommand = void 0;
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const fs = __importStar(__nccwpck_require__(747));
 const os = __importStar(__nccwpck_require__(87));
-const utils_1 = __nccwpck_require__(655);
+const utils_1 = __nccwpck_require__(619);
 function issueCommand(command, message) {
     const filePath = process.env[`GITHUB_${command}`];
     if (!filePath) {
@@ -518,7 +523,7 @@ exports.issueCommand = issueCommand;
 
 /***/ }),
 
-/***/ 655:
+/***/ 619:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -545,7 +550,7 @@ exports.toCommandValue = toCommandValue;
 
 /***/ }),
 
-/***/ 75:
+/***/ 905:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
@@ -606,7 +611,7 @@ exports.Context = Context;
 
 /***/ }),
 
-/***/ 686:
+/***/ 673:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 "use strict";
@@ -632,8 +637,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getOctokit = exports.context = void 0;
-const Context = __importStar(__nccwpck_require__(75));
-const utils_1 = __nccwpck_require__(680);
+const Context = __importStar(__nccwpck_require__(905));
+const utils_1 = __nccwpck_require__(576);
 exports.context = new Context.Context();
 /**
  * Returns a hydrated octokit ready to use for GitHub Actions
@@ -649,7 +654,7 @@ exports.getOctokit = getOctokit;
 
 /***/ }),
 
-/***/ 613:
+/***/ 314:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 "use strict";
@@ -675,7 +680,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getApiBaseUrl = exports.getProxyAgent = exports.getAuthString = void 0;
-const httpClient = __importStar(__nccwpck_require__(366));
+const httpClient = __importStar(__nccwpck_require__(683));
 function getAuthString(token, options) {
     if (!token && !options.auth) {
         throw new Error('Parameter token or opts.auth is required');
@@ -699,7 +704,7 @@ exports.getApiBaseUrl = getApiBaseUrl;
 
 /***/ }),
 
-/***/ 680:
+/***/ 576:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 "use strict";
@@ -725,12 +730,12 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getOctokitOptions = exports.GitHub = exports.context = void 0;
-const Context = __importStar(__nccwpck_require__(75));
-const Utils = __importStar(__nccwpck_require__(613));
+const Context = __importStar(__nccwpck_require__(905));
+const Utils = __importStar(__nccwpck_require__(314));
 // octokit + plugins
-const core_1 = __nccwpck_require__(48);
-const plugin_rest_endpoint_methods_1 = __nccwpck_require__(555);
-const plugin_paginate_rest_1 = __nccwpck_require__(974);
+const core_1 = __nccwpck_require__(575);
+const plugin_rest_endpoint_methods_1 = __nccwpck_require__(868);
+const plugin_paginate_rest_1 = __nccwpck_require__(264);
 exports.context = new Context.Context();
 const baseUrl = Utils.getApiBaseUrl();
 const defaults = {
@@ -760,7 +765,7 @@ exports.getOctokitOptions = getOctokitOptions;
 
 /***/ }),
 
-/***/ 366:
+/***/ 683:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
@@ -768,7 +773,7 @@ exports.getOctokitOptions = getOctokitOptions;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const http = __nccwpck_require__(605);
 const https = __nccwpck_require__(211);
-const pm = __nccwpck_require__(167);
+const pm = __nccwpck_require__(599);
 let tunnel;
 var HttpCodes;
 (function (HttpCodes) {
@@ -1187,7 +1192,7 @@ class HttpClient {
         if (useProxy) {
             // If using proxy, need tunnel
             if (!tunnel) {
-                tunnel = __nccwpck_require__(136);
+                tunnel = __nccwpck_require__(886);
             }
             const agentOptions = {
                 maxSockets: maxSockets,
@@ -1305,7 +1310,7 @@ exports.HttpClient = HttpClient;
 
 /***/ }),
 
-/***/ 167:
+/***/ 599:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -1370,7 +1375,7 @@ exports.checkBypass = checkBypass;
 
 /***/ }),
 
-/***/ 803:
+/***/ 116:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -1427,7 +1432,7 @@ exports.createTokenAuth = createTokenAuth;
 
 /***/ }),
 
-/***/ 48:
+/***/ 575:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
@@ -1435,11 +1440,11 @@ exports.createTokenAuth = createTokenAuth;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 
-var universalUserAgent = __nccwpck_require__(766);
-var beforeAfterHook = __nccwpck_require__(711);
-var request = __nccwpck_require__(165);
-var graphql = __nccwpck_require__(756);
-var authToken = __nccwpck_require__(803);
+var universalUserAgent = __nccwpck_require__(386);
+var beforeAfterHook = __nccwpck_require__(106);
+var request = __nccwpck_require__(829);
+var graphql = __nccwpck_require__(753);
+var authToken = __nccwpck_require__(116);
 
 function _objectWithoutPropertiesLoose(source, excluded) {
   if (source == null) return {};
@@ -1610,7 +1615,7 @@ exports.Octokit = Octokit;
 
 /***/ }),
 
-/***/ 330:
+/***/ 186:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
@@ -1618,8 +1623,8 @@ exports.Octokit = Octokit;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 
-var isPlainObject = __nccwpck_require__(620);
-var universalUserAgent = __nccwpck_require__(766);
+var isPlainObject = __nccwpck_require__(681);
+var universalUserAgent = __nccwpck_require__(386);
 
 function lowercaseKeys(object) {
   if (!object) {
@@ -2008,7 +2013,7 @@ exports.endpoint = endpoint;
 
 /***/ }),
 
-/***/ 756:
+/***/ 753:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
@@ -2016,8 +2021,8 @@ exports.endpoint = endpoint;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 
-var request = __nccwpck_require__(165);
-var universalUserAgent = __nccwpck_require__(766);
+var request = __nccwpck_require__(829);
+var universalUserAgent = __nccwpck_require__(386);
 
 const VERSION = "4.6.2";
 
@@ -2132,7 +2137,7 @@ exports.withCustomRequest = withCustomRequest;
 
 /***/ }),
 
-/***/ 974:
+/***/ 264:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -2284,7 +2289,7 @@ exports.paginatingEndpoints = paginatingEndpoints;
 
 /***/ }),
 
-/***/ 555:
+/***/ 868:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -3549,7 +3554,7 @@ exports.restEndpointMethods = restEndpointMethods;
 
 /***/ }),
 
-/***/ 533:
+/***/ 617:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
@@ -3559,8 +3564,8 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var deprecation = __nccwpck_require__(984);
-var once = _interopDefault(__nccwpck_require__(319));
+var deprecation = __nccwpck_require__(124);
+var once = _interopDefault(__nccwpck_require__(702));
 
 const logOnce = once(deprecation => console.warn(deprecation));
 /**
@@ -3612,7 +3617,7 @@ exports.RequestError = RequestError;
 
 /***/ }),
 
-/***/ 165:
+/***/ 829:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
@@ -3622,11 +3627,11 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var endpoint = __nccwpck_require__(330);
-var universalUserAgent = __nccwpck_require__(766);
-var isPlainObject = __nccwpck_require__(620);
-var nodeFetch = _interopDefault(__nccwpck_require__(168));
-var requestError = __nccwpck_require__(533);
+var endpoint = __nccwpck_require__(186);
+var universalUserAgent = __nccwpck_require__(386);
+var isPlainObject = __nccwpck_require__(681);
+var nodeFetch = _interopDefault(__nccwpck_require__(954));
+var requestError = __nccwpck_require__(617);
 
 const VERSION = "5.5.0";
 
@@ -3778,12 +3783,12 @@ exports.request = request;
 
 /***/ }),
 
-/***/ 711:
+/***/ 106:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
-var register = __nccwpck_require__(907)
-var addHook = __nccwpck_require__(543)
-var removeHook = __nccwpck_require__(112)
+var register = __nccwpck_require__(654)
+var addHook = __nccwpck_require__(193)
+var removeHook = __nccwpck_require__(183)
 
 // bind with array of arguments: https://stackoverflow.com/a/21792913
 var bind = Function.bind
@@ -3842,7 +3847,7 @@ module.exports.Collection = Hook.Collection
 
 /***/ }),
 
-/***/ 543:
+/***/ 193:
 /***/ ((module) => {
 
 module.exports = addHook;
@@ -3895,7 +3900,7 @@ function addHook(state, kind, name, hook) {
 
 /***/ }),
 
-/***/ 907:
+/***/ 654:
 /***/ ((module) => {
 
 module.exports = register;
@@ -3929,7 +3934,7 @@ function register(state, name, method, options) {
 
 /***/ }),
 
-/***/ 112:
+/***/ 183:
 /***/ ((module) => {
 
 module.exports = removeHook;
@@ -3955,7 +3960,7 @@ function removeHook(state, name, method) {
 
 /***/ }),
 
-/***/ 984:
+/***/ 124:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -3983,7 +3988,7 @@ exports.Deprecation = Deprecation;
 
 /***/ }),
 
-/***/ 620:
+/***/ 681:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -4029,7 +4034,7 @@ exports.isPlainObject = isPlainObject;
 
 /***/ }),
 
-/***/ 168:
+/***/ 954:
 /***/ ((module, exports, __nccwpck_require__) => {
 
 "use strict";
@@ -4194,7 +4199,7 @@ FetchError.prototype.name = 'FetchError';
 
 let convert;
 try {
-	convert = __nccwpck_require__(335).convert;
+	convert = __nccwpck_require__(908).convert;
 } catch (e) {}
 
 const INTERNALS = Symbol('Body internals');
@@ -5686,10 +5691,10 @@ exports.FetchError = FetchError;
 
 /***/ }),
 
-/***/ 319:
+/***/ 702:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
-var wrappy = __nccwpck_require__(67)
+var wrappy = __nccwpck_require__(570)
 module.exports = wrappy(once)
 module.exports.strict = wrappy(onceStrict)
 
@@ -5735,15 +5740,15 @@ function onceStrict (fn) {
 
 /***/ }),
 
-/***/ 136:
+/***/ 886:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
-module.exports = __nccwpck_require__(742);
+module.exports = __nccwpck_require__(60);
 
 
 /***/ }),
 
-/***/ 742:
+/***/ 60:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
@@ -5753,7 +5758,7 @@ var net = __nccwpck_require__(631);
 var tls = __nccwpck_require__(16);
 var http = __nccwpck_require__(605);
 var https = __nccwpck_require__(211);
-var events = __nccwpck_require__(759);
+var events = __nccwpck_require__(614);
 var assert = __nccwpck_require__(357);
 var util = __nccwpck_require__(669);
 
@@ -6015,7 +6020,7 @@ exports.debug = debug; // for test
 
 /***/ }),
 
-/***/ 766:
+/***/ 386:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -6041,7 +6046,7 @@ exports.getUserAgent = getUserAgent;
 
 /***/ }),
 
-/***/ 67:
+/***/ 570:
 /***/ ((module) => {
 
 // Returns a wrapper function that returns a wrapped callback
@@ -6081,10 +6086,10 @@ function wrappy (fn, cb) {
 
 /***/ }),
 
-/***/ 86:
+/***/ 44:
 /***/ ((module, exports, __nccwpck_require__) => {
 
-const {inspect} = __nccwpck_require__(669)
+const { inspect } = __nccwpck_require__(669);
 
 /**
 * Ok not technically pure since it does log, this function take in the list of
@@ -6095,56 +6100,61 @@ const {inspect} = __nccwpck_require__(669)
 * It also updates the writer object by populating the errorMessages array if a
 * user was not flagged in.
 */
-const areActorAndAuthorFlaggedInFunc = ({actor, flaggedInList, pull_request}, {log, errorMessages}) => {
-  if (!flaggedInList || flaggedInList === '') {
-    log('Action is not gated for any users')
-    return true
+const areActorAndAuthorFlaggedInFunc = (
+  { actor, flaggedInList, pull_request },
+  { log, errorMessages }
+) => {
+  if (!flaggedInList || flaggedInList === "") {
+    log("Action is not gated for any users");
+    return true;
   }
 
-  log('flagged in list', inspect(flaggedInList))
-  const flaggedInUsers = flaggedInList.split(',')
-  flaggedInUsers.forEach(u => log(`flagged in ${u.split('').reverse().join('')}`))
-  const {user: author} = pull_request
-  log('pull_request', pull_request)
+  log("flagged in list", inspect(flaggedInList));
+  const flaggedInUsers = flaggedInList.split(",");
+  flaggedInUsers.forEach((u) =>
+    log(`flagged in ${u.split("").reverse().join("")}`)
+  );
+  const { user: author } = pull_request;
+  log("pull_request", pull_request);
 
   const nonFlaggedInUsers = [actor, author.login].reduce((acc, login) => {
     if (!flaggedInUsers.includes(login)) {
-      errorMessages.push(`${login} is not flagged into the Review Queue`)
-      acc.push(login)
+      errorMessages.push(`${login} is not flagged into the Review Queue`);
+      acc.push(login);
     }
-    return acc
-  }, [])
-  return nonFlaggedInUsers.length === 0
-}
+    return acc;
+  }, []);
+  return nonFlaggedInUsers.length === 0;
+};
 
 /**
  * Gather the state of the PR from inputs and determine if it should be added to
  * the queue or removed.
  */
-const shouldQueueFunc = ({action, pull_request, review}) => {
-  const reviewState = review && review.state
+const shouldQueueFunc = ({ action, pull_request, review }) => {
+  const reviewState = review && review.state;
 
   if (
-    action === 'closed' ||
-    action === 'converted_to_draft' ||
-    (action === 'opened' && pull_request.draft) ||
-    reviewState === 'approved'
+    action === "closed" ||
+    action === "converted_to_draft" ||
+    pull_request.draft ||
+    reviewState === "approved"
   ) {
-    return false
+    return false;
   }
 
-  return true
-}
+  return true;
+};
 
 module.exports = exports = {
   areActorAndAuthorFlaggedInFunc,
-  shouldQueueFunc
-}
+  shouldQueueFunc,
+};
 
 
 /***/ }),
 
-/***/ 274:
+/***/ 692:
 /***/ ((__unused_webpack_module, exports) => {
 
 // Query to get the Relay ID of the Project vNext
@@ -6155,8 +6165,8 @@ exports.getProjectNextQuery = (organization, projectNextNumber) => {
         id
       }
     }
-  }`
-}
+  }`;
+};
 
 // Query to get the Relay ID of the Project vNext
 exports.getProjectNextItemQuery = (organization, projectNextNumber) => {
@@ -6177,8 +6187,8 @@ exports.getProjectNextItemQuery = (organization, projectNextNumber) => {
         }
       }
     }
-  }`
-}
+  }`;
+};
 
 // Mutation to remove the Pull Request to the Project vNext
 exports.removePullRequestFromProjectNext = (itemId, projectRelayId) => {
@@ -6186,8 +6196,8 @@ exports.removePullRequestFromProjectNext = (itemId, projectRelayId) => {
     deleteProjectNextItem(input: {itemId: "${itemId}", projectId: "${projectRelayId}"}) {
       deletedItemId
     }
-  }`
-}
+  }`;
+};
 
 // Mutation to add the Pull Request to the Project vNext
 exports.addPullRequestToProjectNext = (contentId, projectRelayId) => {
@@ -6197,13 +6207,13 @@ exports.addPullRequestToProjectNext = (contentId, projectRelayId) => {
         id
       }
     }
-  }`
-}
+  }`;
+};
 
 
 /***/ }),
 
-/***/ 335:
+/***/ 908:
 /***/ ((module) => {
 
 module.exports = eval("require")("encoding");
@@ -6219,7 +6229,7 @@ module.exports = require("assert");
 
 /***/ }),
 
-/***/ 759:
+/***/ 614:
 /***/ ((module) => {
 
 "use strict";
@@ -6356,121 +6366,149 @@ module.exports = require("zlib");
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-const core = __nccwpck_require__(614)
-const github = __nccwpck_require__(686)
-const {graphql} = __nccwpck_require__(756)
-const {main} = __nccwpck_require__(527)
-const {log} = __nccwpck_require__(315)
+const core = __nccwpck_require__(558);
+const github = __nccwpck_require__(673);
+const { graphql } = __nccwpck_require__(753);
+const { main } = __nccwpck_require__(333);
+const { log } = __nccwpck_require__(11);
 const {
   getProjectNextQuery,
   getProjectNextItemQuery,
   removePullRequestFromProjectNext,
-  addPullRequestToProjectNext
-} = __nccwpck_require__(274)
-const {areActorAndAuthorFlaggedInFunc, shouldQueueFunc} = __nccwpck_require__(86)
+  addPullRequestToProjectNext,
+} = __nccwpck_require__(692);
+const { areActorAndAuthorFlaggedInFunc, shouldQueueFunc } = __nccwpck_require__(44);
 
-const UNABLE_TO_ADD_MESSAGE = `Unable to add Pull Request to the Review Queue Project`
-const PR_NOT_FOUND_MESSAGE = 'Pull Request not found in Review Queue Project'
-const UNABLE_TO_REMOVE_MESSAGE = 'Unable to remove Pull Request from Review Queue Project'
+const UNABLE_TO_ADD_MESSAGE = `Unable to add Pull Request to the Review Queue Project`;
+const PR_NOT_FOUND_MESSAGE = "Pull Request not found in Review Queue Project";
+const UNABLE_TO_REMOVE_MESSAGE =
+  "Unable to remove Pull Request from Review Queue Project";
 
-const fetchProjectNextRelayId = async ({organization, projectNextNumber, graphqlExecutor}, {log}) => {
-  try {
-    const projectData = await graphqlExecutor(getProjectNextQuery(organization, projectNextNumber))
-    const {projectNext} = projectData.organization
-    if (!projectNext) throw new Error(`Unable to find Project ${organization}:${projectNextNumber}`)
-    log('projectData', projectData)
-    return projectNext.id
-  } catch (error) {
-    log(`Unable to fetch review project ${organization}:${projectNextNumber}`)
-    return null
-  }
-}
-
-const queueForReview = async ({graphqlExecutor, pull_request}, {projectNextRelayId}, {errorMessages}) => {
-  try {
-    const pullRequestRelayId = pull_request.node_id
-    const response = await graphqlExecutor(addPullRequestToProjectNext(pullRequestRelayId, projectNextRelayId))
-    return {
-      response,
-      message: 'Pull Request was added to the Review Queue successfully'
-    }
-  } catch (error) {
-    log(UNABLE_TO_ADD_MESSAGE)
-    errorMessages.push(UNABLE_TO_ADD_MESSAGE)
-    errorMessages.push(error.message)
-    return {error, message: error.message}
-  }
-}
-
-const dequeueForReview = async (
-  {graphqlExecutor, organization, projectNextNumber, pull_request},
-  {projectNextRelayId},
-  {errorMessages}
+const fetchProjectNextRelayId = async (
+  { organization, projectNextNumber, graphqlExecutor },
+  { log }
 ) => {
   try {
-    const projectItemData = await graphqlExecutor(getProjectNextItemQuery(organization, projectNextNumber))
-    const {items} = projectItemData.organization.projectNext
-    if (!items || items.length === 0)
-      throw new Error(`Unable to find Project Item ${organization}:${projectNextNumber}${pull_request.id}: no items`)
-    const {edges} = items
-    if (!edges || edges.length === 0)
-      throw new Error(`Unable to find Project Item ${organization}:${projectNextNumber}${pull_request.id}: no edges`)
+    const projectData = await graphqlExecutor(
+      getProjectNextQuery(organization, projectNextNumber)
+    );
+    const { projectNext } = projectData.organization;
+    if (!projectNext)
+      throw new Error(
+        `Unable to find Project ${organization}:${projectNextNumber}`
+      );
+    log("projectData", projectData);
+    return projectNext.id;
+  } catch (error) {
+    log(`Unable to fetch review project ${organization}:${projectNextNumber}`);
+    return null;
+  }
+};
 
-    const edge = edges.find(edge => {
-      const {content} = edge.node
-      if (!content) return false
-      return content.databaseId === pull_request.id
-    })
+const queueForReview = async (
+  { graphqlExecutor, pull_request },
+  { projectNextRelayId },
+  { errorMessages }
+) => {
+  try {
+    const pullRequestRelayId = pull_request.node_id;
+    const response = await graphqlExecutor(
+      addPullRequestToProjectNext(pullRequestRelayId, projectNextRelayId)
+    );
+    return {
+      response,
+      message: "Pull Request was added to the Review Queue successfully",
+    };
+  } catch (error) {
+    log(UNABLE_TO_ADD_MESSAGE);
+    errorMessages.push(UNABLE_TO_ADD_MESSAGE);
+    errorMessages.push(error.message);
+    return { error, message: error.message };
+  }
+};
+
+const dequeueForReview = async (
+  { graphqlExecutor, organization, projectNextNumber, pull_request },
+  { projectNextRelayId },
+  { errorMessages }
+) => {
+  try {
+    const projectItemData = await graphqlExecutor(
+      getProjectNextItemQuery(organization, projectNextNumber)
+    );
+    const { items } = projectItemData.organization.projectNext;
+    if (!items || items.length === 0)
+      throw new Error(
+        `Unable to find Project Item ${organization}:${projectNextNumber}${pull_request.id}: no items`
+      );
+    const { edges } = items;
+    if (!edges || edges.length === 0)
+      throw new Error(
+        `Unable to find Project Item ${organization}:${projectNextNumber}${pull_request.id}: no edges`
+      );
+
+    const edge = edges.find((edge) => {
+      const { content } = edge.node;
+      if (!content) return false;
+      return content.databaseId === pull_request.id;
+    });
 
     // swallow no matching edge
     if (!edge || !edge.node) {
-      errorMessages.push(PR_NOT_FOUND_MESSAGE)
-      return {response: {}, message: PR_NOT_FOUND_MESSAGE}
+      errorMessages.push(PR_NOT_FOUND_MESSAGE);
+      return { response: {}, message: PR_NOT_FOUND_MESSAGE };
     }
 
     const {
-      node: {id: projectNextItemRelayId}
-    } = edge
+      node: { id: projectNextItemRelayId },
+    } = edge;
 
     // swallow not found here
     if (!projectNextItemRelayId) {
-      errorMessages.push(PR_NOT_FOUND_MESSAGE)
-      return {response: {}, message: PR_NOT_FOUND_MESSAGE}
+      errorMessages.push(PR_NOT_FOUND_MESSAGE);
+      return { response: {}, message: PR_NOT_FOUND_MESSAGE };
     }
 
-    const response = await graphqlExecutor(removePullRequestFromProjectNext(projectNextItemRelayId, projectNextRelayId))
+    const response = await graphqlExecutor(
+      removePullRequestFromProjectNext(
+        projectNextItemRelayId,
+        projectNextRelayId
+      )
+    );
     return {
       response,
-      message: 'Pull Request was removed from the Review Queue successfully'
-    }
+      message: "Pull Request was removed from the Review Queue successfully",
+    };
   } catch (error) {
-    log(UNABLE_TO_REMOVE_MESSAGE)
-    errorMessages.push(UNABLE_TO_REMOVE_MESSAGE)
-    errorMessages.push(error.message)
-    return {error, message: error.message}
+    log(UNABLE_TO_REMOVE_MESSAGE);
+    errorMessages.push(UNABLE_TO_REMOVE_MESSAGE);
+    errorMessages.push(error.message);
+    return { error, message: error.message };
   }
-}
+};
 
 const gatherInputs = async () => {
-  const {payload, review, actor} = github.context
-  const {pull_request, action} = payload
+  const { payload, review, actor } = github.context;
+  const { pull_request, action } = payload;
   const state = {
     payload,
     review,
     actor,
     action,
     pull_request,
-    organization: core.getInput('project-owner', {required: true}),
-    projectNextNumber: core.getInput('project-number', {required: true}),
-    flaggedInList: core.getInput('flagged-in-users', {required: false}),
+    organization: core.getInput("project-owner", { required: true }),
+    projectNextNumber: core.getInput("project-number", { required: true }),
+    flaggedInList: core.getInput("flagged-in-users", { required: false }),
     graphqlExecutor: graphql.defaults({
-      baseUrl: process.env.GRAPHQL_API_BASE || 'https://api.github.com',
+      baseUrl: process.env.GRAPHQL_API_BASE || "https://api.github.com",
       headers: {
-        'GraphQL-Features': 'projects_next_graphql',
-        Authorization: `Bearer ${process.env.PAT_TOKEN || process.env.GITHUB_TOKEN}`
-      }
-    })
-  }
+        "GraphQL-Features": "projects_next_graphql",
+        Authorization: `Bearer ${
+          process.env.PAT_TOKEN || process.env.GITHUB_TOKEN
+        }`,
+      },
+    }),
+  };
 
   const writer = {
     setOutput: core.setOutput,
@@ -6478,28 +6516,33 @@ const gatherInputs = async () => {
     debug: core.debug,
     info: core.info,
     log,
-    errorMessages: []
-  }
+    errorMessages: [],
+  };
 
-  const areActorAndAuthorFlaggedIn = areActorAndAuthorFlaggedInFunc(state, writer)
-  const shouldQueue = shouldQueueFunc(state)
-  const projectNextRelayId = await fetchProjectNextRelayId(state, writer).catch(error => {
-    writer.errorMessages.push('Unable to fetch Review Queue Project')
-    writer.errorMessages.push(error)
-    return null
-  })
+  const areActorAndAuthorFlaggedIn = areActorAndAuthorFlaggedInFunc(
+    state,
+    writer
+  );
+  const shouldQueue = shouldQueueFunc(state);
+  const projectNextRelayId = await fetchProjectNextRelayId(state, writer).catch(
+    (error) => {
+      writer.errorMessages.push("Unable to fetch Review Queue Project");
+      writer.errorMessages.push(error);
+      return null;
+    }
+  );
 
   const reader = {
     shouldQueue,
     areActorAndAuthorFlaggedIn,
     projectNextRelayId,
-    func: shouldQueue ? queueForReview : dequeueForReview
-  }
+    func: shouldQueue ? queueForReview : dequeueForReview,
+  };
 
-  return {state, reader, writer}
-}
+  return { state, reader, writer };
+};
 
-main(gatherInputs)
+main(gatherInputs);
 
 })();
 
