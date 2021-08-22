@@ -6,8 +6,8 @@ exports.getProjectNextQuery = (organization, projectNextNumber) => {
         id
       }
     }
-  }`
-}
+  }`;
+};
 
 // Query to get the Relay ID of the Project vNext
 exports.getProjectNextItemQuery = (organization, projectNextNumber) => {
@@ -28,8 +28,8 @@ exports.getProjectNextItemQuery = (organization, projectNextNumber) => {
         }
       }
     }
-  }`
-}
+  }`;
+};
 
 // Mutation to remove the Pull Request to the Project vNext
 exports.removePullRequestFromProjectNext = (itemId, projectRelayId) => {
@@ -37,8 +37,8 @@ exports.removePullRequestFromProjectNext = (itemId, projectRelayId) => {
     deleteProjectNextItem(input: {itemId: "${itemId}", projectId: "${projectRelayId}"}) {
       deletedItemId
     }
-  }`
-}
+  }`;
+};
 
 // Mutation to add the Pull Request to the Project vNext
 exports.addPullRequestToProjectNext = (contentId, projectRelayId) => {
@@ -48,5 +48,5 @@ exports.addPullRequestToProjectNext = (contentId, projectRelayId) => {
         id
       }
     }
-  }`
-}
+  }`;
+};
