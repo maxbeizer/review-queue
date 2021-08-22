@@ -11,6 +11,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+## [0.2.0] - 2021-08-21
+
+### Added
+
+### Changed
+
+- All PRs in draft state will now be removed from the queue
+
 ## [0.1.3] - 2021-08-19
 
 ### Added
