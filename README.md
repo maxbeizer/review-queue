@@ -8,34 +8,54 @@ What constitutes a reviewable Pull Request? A Pull Request that is neither close
 
 ## Inputs
 
-## `project-owner`
+#### `project-owner`
 
 **Required** The name of the organization that owns the project. Default `"github"`.
 
-## `project-number`
+#### `project-number`
 
 **Required** The number of the review queue project, e.g. `42`.
 
-## `flagged-in-users`
+#### `flagged-in-users`
 
 A comma separated string of user handles who are opted into this action, e.g. `"nat,defunkt"`
 
-## `debug`
+#### `debug`
 
 A boolean representing whether you want to log lots of debugging information into the action output.
 
 ## Example usage
 
 ```yml
-uses: github/review-queue@v0.1.2
-with:
-  project-owner: "github"
-  project-number: 12345
-  flagged-in-users: "maxbeizer,stephenotalora,mattcosta7"
-  debug: false
-env:
-  PAT_TOKEN: ${{ secrets.PAT_TOKEN }} # The token must have repo and admin:org scopes
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+on:
+  pull_request:
+    types:
+      [opened, ready_for_review, review_requested, closed, converted_to_draft]
+  pull_request_review:
+    types: [submitted, dismissed]
+
+name: 🔜 review queue
+
+jobs:
+  review_queue:
+    runs-on: ubuntu-latest
+    name: Add/remove reviewable PRs to Review Queue
+    steps:
+      - name: Add/Remove PR to Review Project
+        id: add_remove_to_from_queue
+        uses: maxbeizer/review-queue@main
+        with:
+          project-owner: "github"
+          project-number: 12345
+          flagged-in-users: "maxbeizer,stephenotalora,mattcosta7"
+          debug: true
+        env:
+          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Get the action result
+        run: |
+          echo "Job success ${{ steps.add_remove_to_from_queue.outputs.success }}" && \
+          echo "Message ${{ steps.add_remove_to_from_queue.outputs.messages }}"
 ```
 
 ## Developing
