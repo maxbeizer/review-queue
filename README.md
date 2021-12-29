@@ -24,6 +24,12 @@ A comma separated string of user handles who are opted into this action, e.g. `"
 
 A boolean representing whether you want to log lots of debugging information into the action output.
 
+## Secrets
+
+### `PAT_TOKEN`
+
+Per [the docs](https://docs.github.com/en/issues/trying-out-the-new-projects-experience/using-the-api-to-manage-projects#authentication) you currently have to have a Personal Access Token (PAT) with at least `write:org` set in the [Repository secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets).
+
 ## Example usage
 
 ```yml
