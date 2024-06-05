@@ -1,3 +1,6 @@
+> [!WARNING]
+> This repo/project is no longer actively maintained. Feel free to fork if you'd like.
+
 # Review Queue
 
 **Note** This Action requires that you have access the [new projects beta](https://github.blog/2021-06-23-introducing-new-github-issues/). It is not compatible with the classic Projects product.
